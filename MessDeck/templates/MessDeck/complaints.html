@@ -1,0 +1,80 @@
+{% extends 'MessDeck/base.html' %}
+
+{% block title %}Complaints{% endblock %}
+
+{% block content %}
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">MESSDECK</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'MessDeck-staff' %}">Dashboard</a></li>
+                <li><a href="{% url 'upload_menu' %}">Upload Menu</a></li>
+                <li class="active"><a href="{% url 'complaints' %}">Complaints | Feedbacks</a></li>
+                <li><a href="{% url 'item_ratings' %}">Item Ratings</a></li>
+                <li><a href="#">Developer</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="{% url 'profile' %}"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+                <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <!--    Below 5 lines are how we'll show average rating of a item in mess -->
+    <!--    <ul>-->
+    <!--        {% for feedback in all_feedback %}-->
+    <!--        <li>{{ feedback.student.user.username }} - {{ feedback.menu_item.item_name }} - {{ feedback.rating }}</li>-->
+    <!--        {% endfor %}-->
+    <!--    </ul>-->
+
+    <h2>Unread Complaints</h2>
+    {% for complaint in all_complaint %}
+    {% if not complaint.status %}
+    <blockquote style="background-color: #f9f9f9; color: #333; border-left: 5px solid #ccc; padding: 10px;">
+        <ul>
+            {{complaint.description}}
+        </ul>
+        {% if complaint.image %}
+        <img src="{{ complaint.image.url }}" alt="Complaint Image">
+        {% endif %}
+        <p>Complaint Date: {{complaint.date_complaint}}</p>
+        <footer>{{complaint.student.username}}</footer>
+        <form method="post" action="{% url 'mark_complaint_viewed' complaint.id %}">
+            {% csrf_token %}
+            <button type="submit">Mark as Viewed</button>
+        </form>
+    </blockquote>
+    {% endif %}
+    {% endfor %}
+
+    <button type="button" data-toggle="collapse" data-target="#demo">View All Complaints</button>
+    <div id="demo" class="collapse">
+        {% for complaint in all_complaint %}
+        <blockquote style="background-color: #f9f9f9; color: #333; border-left: 5px solid #ccc; padding: 10px;">
+            <ul>
+                {{complaint.description}}
+            </ul>
+            <p>Complaint Date: {{complaint.date_complaint}}</p>
+            <p>Student Name: {{complaint.student.username}}</p>
+            {% if complaint.image %}
+            <img src="{{ complaint.image.url }}" alt="Complaint Image">
+            {% endif %}
+            <p>Complaint Viewed: {{complaint.status}}</p>
+        </blockquote>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}

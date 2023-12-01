@@ -1,0 +1,52 @@
+{% extends 'MessDeck/base.html' %}
+
+{% block title %}Staff Dash{% endblock %}
+
+{% block content %}
+
+<!--Navigation bar-->
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">MESSDECK</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="{% url 'MessDeck-staff' %}">Dashboard</a></li>
+                <li><a href="{% url 'upload_menu' %}">Upload Menu</a></li>
+                <li><a href="{% url 'complaints' %}">Complaints | Feedbacks</a></li>
+                <li><a href="{% url 'item_ratings' %}">Item Ratings</a></li>
+                <li><a href="#">Developer</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="{% url 'profile' %}"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+                <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!--Staff Dash Content-->
+<div class="jumbotron text-center" style="background-color: lavender;">
+    <h1>Staff Dashboard</h1>
+    <p>Serve well</p>
+</div>
+<div class="container">
+    <div class="well">
+        <h1>Info</h1>
+        <strong>Welcome to MessDeck Staff Dashboard, here you can:</strong>
+        <ul> </ul>
+        <p><a href="{% url 'upload_menu' %}">Upload Menu</a></p>
+        <p><a href="{% url 'complaints' %}">See Complaints | Feedbacks</a></p>
+        <p><a href="{% url 'item_ratings' %}">See Item Ratings</a></p>
+        <p><a href="#">Calculate Fees Of Student</a></p>
+<!--        <p><a href="{% url 'MessDeck-student' %}">student</a></p>-->
+    </div>
+</div>
+
+{% endblock %}

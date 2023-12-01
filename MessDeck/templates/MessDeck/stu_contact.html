@@ -1,0 +1,55 @@
+{% extends 'MessDeck/base.html' %}
+
+{% block title %}Student Dash{% endblock %}
+
+{% block content %}
+
+
+<!--Navigation bar-->
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">MESSDECK</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'MessDeck-student' %}">Dashboard</a></li>
+                <li><a href="{% url 'monthly_menu' %}">Monthly Menu</a></li>
+                <li><a href="{% url 'file_complaint' %}">Complaint</a></li>
+                <li class="active"><a href="{% url 'stu_contact' %}">Contact</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+                <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="well">
+        <h1>Staff's Contact</h1>
+        <ul>
+            Mess: SR
+        </ul>
+        <ul>
+            Contact no.:
+        </ul>
+        <ul>
+            Mess Head:
+        </ul>
+    </div>
+    <div class="well">
+        <h1>Developer's Contact</h1>
+        <img src="../media/profile.jpg" alt="Description of the image">
+        <ul>Name: Avyakt Verma</ul>
+        <ul>Email: asciz.seven@gmail.com</ul>
+        <ul>Contact: 8817928004</ul>
+    </div>
+</div>
+
+{% endblock content %}

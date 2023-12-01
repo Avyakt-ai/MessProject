@@ -1,0 +1,150 @@
+{% extends 'MessDeck/base.html' %}
+
+{% block title %}Student Dash{% endblock %}
+
+{% block content %}
+
+<!--Navigation bar-->
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">MESSDECK</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="{% url 'MessDeck-student' %}">Dashboard</a></li>
+                <li><a href="{% url 'monthly_menu' %}">Monthly Menu</a></li>
+                <li><a href="{% url 'file_complaint' %}">Complaint</a></li>
+                <li><a href="{% url 'stu_contact' %}">Contact</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+                <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!--This is Student Dashboard-->
+<div class="jumbotron text-center" style="background-color:lavender;">
+    <h1>Student Dashboard</h1>
+    <p>Enjoy the meal!</p>
+</div>
+
+<!--This is left, right and middle content bar-->
+<div class="container-fluid text-center">
+    <div class="row content">
+        <!--This is left content bar-->
+        <div class="col-sm-2 well-lg">
+            <div class="row">
+                <div class="well">
+                    <h2>Current Meal</h2>
+                </div>
+                {% if mess_closed %}
+                {{message}}
+                {% else %}
+                <div class="well">
+                    {% if breakfast_time %}
+                    <h1>Breakfast</h1>
+                    <ul>
+                        {% for item in current_menu1.BREAKFAST %}
+                        <div class="row">{{item}}</div>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    {% if lunch_time %}
+                    <h1>Lunch</h1>
+                    <ul>
+                        {% for item in current_menu1.LUNCH %}
+                        <div class="row">{{item}}</div>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    {% if dinner_time %}
+                    <h1>Dinner</h1>
+                    <ul>
+                        {% for item in current_menu1.DINNER %}
+                        <div class="row">{{item}}</div>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+<!--                <div class="well">-->
+<!--                    <p><a href="#">Link</a></p>-->
+<!--                    <p><a href="{% url 'MessDeck-staff' %}">Staff-Link</a></p>-->
+<!--                    <p><a href="#">Link</a></p>-->
+<!--                </div>-->
+                {% endif %}
+            </div>
+        </div>
+        <!--This is middle content bar  -->
+        <div class="col-sm-8 text-left, well">
+            <h1>Welcome</h1>
+            <hr>
+            <h3>Rate the Menu Items</h3>
+            <form action="{% url 'submit_ratings' %}" method="post">
+                {% csrf_token %}
+                {% for item in menu_items %}
+                <label for="rating_{{ item.id }}">{{ item.item_name }}</label>
+                <input type="number" id="rating_{{ item.id }}" name="rating_{{ item.id }}" min="0" max="5">
+                <br>
+                {% endfor %}
+                <input type="submit" value="Submit Ratings">
+            </form>
+        </div>
+        <!--This is right content bar-->
+        <div class="col-sm-2 well-lg">
+            <div class="well">
+                <h1>Todays Menu</h1>
+            </div>
+
+            {% if current_menu1 %}
+            <!--Below line is for showing current date and day when using models-->
+            <div class="row"><strong>{{current_date}}</strong></div>
+            <div class="well">
+                <h1>Breakfast</h1>
+                <ul>
+                    {% for item in current_menu1.BREAKFAST %}
+                    <div class="row">{{item}}</div>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="well">
+                <h1>Lunch</h1>
+                <ul>
+                    {% for item in current_menu1.BREAKFAST %}
+                    <div class="row">{{item}}</div>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="well">
+                <h1>Dinner</h1>
+                <ul>
+                    {% for item in current_menu1.BREAKFAST %}
+                    <div class="row">{{item}}</div>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!--These are the buttons-->
+<div class="container">
+    <h2>Have Any Complaints?</h2>
+    <a href="{% url 'file_complaint' %}">
+        <button type="button" class="btn btn-info">Feedback</button>
+    </a>
+    <a href="{% url 'file_complaint' %}">
+        <button type="button" class="btn btn-danger">Complaint</button>
+    </a>
+    <p></p>
+</div>
+
+{% endblock %}

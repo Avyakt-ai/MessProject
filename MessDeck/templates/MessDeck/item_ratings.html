@@ -1,0 +1,45 @@
+{% extends 'MessDeck/base.html' %}
+
+{% block title %}Complaints{% endblock %}
+
+{% block content %}
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">MESSDECK</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'MessDeck-staff' %}">Dashboard</a></li>
+                <li><a href="{% url 'upload_menu' %}">Upload Menu</a></li>
+                <li><a href="{% url 'complaints' %}">Complaints | Feedbacks</a></li>
+                <li class="active"><a href="{% url 'item_ratings' %}">Item Ratings</a></li>
+                <li><a href="#">Developer</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="{% url 'profile' %}"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+                <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="well">
+        <h1>Menu Items Average Ratings</h1>
+        <ul>
+        {% for item in menu_items %}
+            <li>
+                <strong>{{ item.item_name }}</strong> - Average Rating: {{ item.avg_rating|default:"No ratings yet" }}
+            </li>
+        {% endfor %}
+    </ul>
+    </div>
+</div>
+{% endblock %}

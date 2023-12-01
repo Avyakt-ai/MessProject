@@ -1,0 +1,58 @@
+{% extends 'MessDeck/base.html' %}
+
+{% block title %}Complaints{% endblock %}
+
+{% block content %}
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">MESSDECK</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'MessDeck-student' %}">Dashboard</a></li>
+                <li class="active"><a href="{% url 'monthly_menu' %}">Monthly Menu</a></li>
+                <li><a href="{% url 'file_complaint' %}">Complaint</a></li>
+                <li><a href="{% url 'stu_contact' %}">Contact</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+                <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <h1>Monthly Menu</h1>
+    <ul>
+        {% for menu_date in menu_dates %}
+        <div class="well">
+            <li>
+                <h2>{{ menu_date.month_date }}</h2>
+                <h3>BREAKFAST</h3>
+                <ul>
+                    {{menu_date.breakfast_items}}
+                </ul>
+                <h3>LUNCH</h3>
+                <ul>
+                    {{menu_date.lunch_items}}
+                </ul>
+                <h3>DINNER</h3>
+                <ul>
+                    {{menu_date.dinner_items}}
+                </ul>
+            </li>
+        </div>
+        {% endfor %}
+    </ul>
+</div>
+
+
+{% endblock %}
