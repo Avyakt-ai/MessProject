@@ -1,0 +1,81 @@
+{% extends 'MessDeck/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}MessDeck{% endblock %}
+
+{% block content %}
+
+<!--navigation bar-->
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">MESSDECK</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+<!--            <ul class="nav navbar-nav">-->
+<!--                <li class="active"><a href="#">Dashboard</a></li>-->
+<!--                <li><a href="#">Monthly Menu</a></li>-->
+<!--                <li><a href="#">Complaint</a></li>-->
+<!--                <li><a href="#">Contact</a></li>-->
+<!--            </ul>-->
+            <ul class="nav navbar-nav navbar-right">
+<!--                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Profile</a></li>-->
+                <li><a href="{% url 'register'%}"><span class="glyphicon glyphicon-log-in"></span> Register</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 text-center"> <!-- Use 'mx-auto' to horizontally center -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!--login form-->
+<main role="main" class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="container h-100">
+                <form method="POST">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        <legend class="border-bottom mb-4">Staff Login</legend>
+                        {{ form|crispy }}
+                    </fieldset>
+                    <div class="form-group">
+                        <button class="btn btn-outline-info" type="submit">Login</button>
+                    </div>
+                </form>
+                <div class="border-top pt-3">
+                    <small class="text-muted">
+                        Need An Account? <a class="ml-2" href="{% url 'register' %}">Sign Up Now</a>
+                    </small>
+                    <small class="text-muted">
+                        Student? <a class="ml-2" href="#">Students</a>
+                    </small>
+                    <p> </p>
+                </div>
+                <div class="border-top pt-3">
+                    {% load socialaccount %}
+                    <legend class="border-bottom mb-4">Student Login</legend>
+                    <a href="{% provider_login_url 'google' %}">Login with BITS mail</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{%endblock%}

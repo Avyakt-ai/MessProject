@@ -1,0 +1,61 @@
+{% extends 'MessDeck/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Staff Dash{% endblock %}
+
+{% block content %}
+
+
+<!--Navigation bar-->
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">MESSDECK</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'MessDeck-staff' %}">Dashboard</a></li>
+                <li><a href="{% url 'upload_menu' %}">Upload Menu</a></li>
+                <li><a href="{% url 'complaints' %}">Complaints | Feedbacks</a></li>
+                <li><a href="{% url 'item_ratings' %}">Item Ratings</a></li>
+                <li><a href="#">Developer</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active"><a href="#"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+                <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="media">
+        <img class="rounded-circle account-img" src="{{ user.staffprofile.image.url }}">
+        <div class="media-body">
+            <h2 class="account-heading">{{ user.username }}</h2>
+            <p class="text-secondary">{{ user.email }}</p>
+        </div>
+    </div>
+    <!-- FORM HERE -->
+    <!--    always remember to put enctype in form tag-->
+    <button type="button" data-toggle="collapse" data-target="#demo">Update Profile</button>
+    <div id="demo" class="collapse">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <h2>Update Profile</h2>
+                {{ staff_form|crispy }}
+                {{ staff_profile_form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Update</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}
